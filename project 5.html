@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="C:/projects/git/Web/CSS/POC.CSS/project 4.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <h1> Student Management System</h1>
+
+        <p>
+            Google Form Style Registration
+        </p>
+
+    </header>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <ul>
+
+            <li><a href="#home">Home</a></li>
+
+            <li><a href="#students">Students</a></li>
+
+            <li><a href="#timetable">Timetable</a></li>
+
+            <li><a href="#contact">Contact</a></li>
+
+        </ul>
+
+    </nav>
+
+    <!-- DASHBOARD -->
+
+    <section class="dashboard" id="home">
+
+        <div class="card">
+
+            <h2>Total Students</h2>
+
+            <p id="studentCount">150</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Total Courses</h2>
+
+            <p>12</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Placed Students</h2>
+
+            <p>90</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Active Users</h2>
+
+            <p>58</p>
+
+        </div>
+
+    </section>
+
+    <!-- FORM SECTION -->
+
+    <section class="form-section">
+
+        <h2>
+            Student Registration Form
+        </h2>
+
+        <p class="required">
+            * Indicates required question
+        </p>
+
+        <form id="studentForm">
+
+            <div class="form-group">
+
+                <label>
+                    Student Name <span>*</span>
+                </label>
+
+                <input type="text"
+                       id="name"
+                       placeholder="Enter Student Name"
+                       required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Email <span>*</span>
+                </label>
+
+                <input type="email"
+                       id="email"
+                       placeholder="Enter Email"
+                       required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Select Course <span>*</span>
+                </label>
+
+                <select id="course" required>
+
+                    <option value="">
+                        -- Select Course --
+                    </option>
+
+                    <option>HTML</option>
+                    <option>CSS</option>
+                    <option>JavaScript</option>
+                    <option>Python</option>
+                    <option>Java</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Marks <span>*</span>
+                </label>
+
+                <input type="number"
+                       id="marks"
+                       placeholder="Enter Marks"
+                       required>
+
+            </div>
+
+            <div class="button-group">
+
+                <button type="submit">
+                    Submit
+                </button>
+
+                <button type="reset">
+                    Reset
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+    <!-- STUDENT RECORDS -->
+
+    <section class="table-section" id="students">
+
+        <h2>
+            Student Records
+        </h2>
+
+        <table id="studentTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>Rahul</td>
+                    <td>rahul@gmail.com</td>
+                    <td>HTML</td>
+                    <td>90</td>
+                    <td>A+</td>
+
+                    <td>
+
+                        <button class="edit-btn"
+                                onclick="editStudent(this)">
+                            Edit
+                        </button>
+
+                        <button class="delete-btn"
+                                onclick="deleteStudent(this)">
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <!-- TIMETABLE -->
+
+    <section class="table-section" id="timetable">
+
+        <h2>
+            Class Timetable
+        </h2>
+
+        <table>
+
+            <tr>
+
+                <th>Day</th>
+                <th>9AM - 10AM</th>
+                <th>10AM - 11AM</th>
+                <th>11AM - 12PM</th>
+
+            </tr>
+
+            <tr>
+
+                <td>Monday</td>
+                <td>HTML</td>
+                <td>CSS</td>
+                <td>JavaScript</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Tuesday</td>
+                <td>Python</td>
+                <td>Java</td>
+                <td>React</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Wednesday</td>
+                <td>Project</td>
+                <td>JavaScript</td>
+                <td>HTML</td>
+
+            </tr>
+
+        </table>
+
+    </section>
+
+    <!-- DETAILS -->
+
+    <section class="details-section">
+
+        <h2>
+            Submitted Student Details
+        </h2>
+
+        <div id="detailsBox">
+
+            No Submission Yet...
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer id="contact">
+
+        <h3>
+            Contact Information
+        </h3>
+
+        <p>📍 Hyderabad, India</p>
+
+        <p>📧 support@student.com</p>
+
+        <p>
+            © 2026 Student Management System
+        </p>
+
+    </footer>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        let count = 150;
+
+        let editRow = null;
+
+        document.getElementById("studentForm")
+            .addEventListener("submit", function(event){
+
+            event.preventDefault();
+
+            let name =
+                document.getElementById("name").value;
+
+            let email =
+                document.getElementById("email").value;
+
+            let course =
+                document.getElementById("course").value;
+
+            let marks =
+                Number(document.getElementById("marks").value);
+
+            let grade = "";
+
+            if(marks >= 90){
+
+                grade = "A+";
+
+            }
+
+            else if(marks >= 80){
+
+                grade = "A";
+
+            }
+
+            else if(marks >= 70){
+
+                grade = "B+";
+
+            }
+
+            else if(marks >= 60){
+
+                grade = "B";
+
+            }
+
+            else{
+
+                grade = "Fail";
+
+            }
+
+            let table =
+                document.querySelector("#studentTable tbody");
+
+            /* EDIT RECORD */
+
+            if(editRow !== null){
+
+                editRow.cells[0].innerHTML = name;
+                editRow.cells[1].innerHTML = email;
+                editRow.cells[2].innerHTML = course;
+                editRow.cells[3].innerHTML = marks;
+                editRow.cells[4].innerHTML = grade;
+
+                alert("Student Record Updated!");
+
+                editRow = null;
+
+            }
+
+            /* ADD NEW RECORD */
+
+            else{
+
+                let row = table.insertRow();
+
+                row.insertCell(0).innerHTML = name;
+                row.insertCell(1).innerHTML = email;
+                row.insertCell(2).innerHTML = course;
+                row.insertCell(3).innerHTML = marks;
+                row.insertCell(4).innerHTML = grade;
+
+                row.insertCell(5).innerHTML = `
+
+                    <button class="edit-btn"
+                            onclick="editStudent(this)">
+                        Edit
+                    </button>
+
+                    <button class="delete-btn"
+                            onclick="deleteStudent(this)">
+                        Delete
+                    </button>
+
+                `;
+
+                count++;
+
+                document.getElementById("studentCount")
+                    .innerHTML = count;
+
+                alert("Student Added Successfully!");
+
+            }
+
+            /* DETAILS */
+
+            document.getElementById("detailsBox")
+                .innerHTML = `
+
+                <h3>Submitted Student Details</h3>
+
+                <p><strong>Name:</strong> ${name}</p>
+
+                <p><strong>Email:</strong> ${email}</p>
+
+                <p><strong>Course:</strong> ${course}</p>
+
+                <p><strong>Marks:</strong> ${marks}</p>
+
+                <p><strong>Grade:</strong> ${grade}</p>
+
+            `;
+
+            document.getElementById("studentForm")
+                .reset();
+
+        });
+
+        /* DELETE FUNCTION */
+
+        function deleteStudent(button){
+
+            let row =
+                button.parentElement.parentElement;
+
+            row.remove();
+
+            count--;
+
+            document.getElementById("studentCount")
+                .innerHTML = count;
+
+            alert("Student Deleted Successfully!");
+
+        }
+
+        /* EDIT FUNCTION */
+
+        function editStudent(button){
+
+            editRow =
+                button.parentElement.parentElement;
+
+            document.getElementById("name").value =
+                editRow.cells[0].innerHTML;
+
+            document.getElementById("email").value =
+                editRow.cells[1].innerHTML;
+
+            document.getElementById("course").value =
+                editRow.cells[2].innerHTML;
+
+            document.getElementById("marks").value =
+                editRow.cells[3].innerHTML;
+
+            window.scrollTo({
+
+                top:0,
+
+                behavior:"smooth"
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
